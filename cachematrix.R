@@ -5,7 +5,7 @@
 #one such operation is matrix inversion
 
 #I am not entirely sure how the code works so I will start with the examples given ans see if I can begin to follow it as I hack the code
-
+#I replaced the mean with solve in all cases and it seems to be working
 
 
 makeCacheMatrix <- function(x = matrix()) {#This function creates a special "matrix" object that can cache its inverse.
@@ -15,24 +15,24 @@ makeCacheMatrix <- function(x = matrix()) {#This function creates a special "mat
                 m <<- NULL
         }
         get <- function() x
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
+        setsolve <- function(solve) m <<- solve
+        getsolve <- function() m
         list(set = set, get = get,
-             setmean = setmean,
-             getmean = getmean)
+             setsolve = setsolve,
+             getsolve = getsolve)
 }
 
 
 ## Write a short comment describing this function
 # This function computes the inverse of the special "matrix" returned by makeCacheMatrix above. If the inverse has already been calculated (and the matrix has not changed), then the cachesolve should retrieve the inverse from the cache.
 cacheSolve <- function(x, ...) {## Return a matrix that is the inverse of 'x'
-        m <- x$getmean()
+        m <- x$getsolve()
         if(!is.null(m)) {
                 message("getting cached data")
                 return(m)
         }
         data <- x$get()
-        m <- mean(data, ...)
-        x$setmean(m)
+        m <- solve(data, ...)
+        x$setsolve(m)
         m
 }
